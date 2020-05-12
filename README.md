@@ -14,24 +14,3 @@ seperated by the current quarentining practice by creating our favorite card gam
 in an online format. I plan on using the core of this project to write up a 
 generic card game framework for future projects or anyone else who chooses to use
 it.
-
-
-#Example game frame
-
-Top Card:
- _______ 
-|9      |
-|       |
-|   ♠   |
-|       |
-|      9|
- ------- 
-Your hand:
- _______  _______  _______  _______  _______  _______  _______ 
-|2      ||5      ||10     ||8      ||3      ||7      ||9      |
-|       ||       ||       ||       ||       ||       ||       |
-|   ♥   ||   ♦   ||   ♦   ||   ♥   ||   ♠   ||   ♦   ||   ♦   |
-|       ||       ||       ||       ||       ||       ||       |
-|      2||      5||     10||      8||      3||      7||      9|
- -------  -------  -------  -------  -------  -------  ------- 
-Draw or Place a Card? (d or p)
