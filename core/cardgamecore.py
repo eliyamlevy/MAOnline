@@ -1,12 +1,15 @@
 from random import shuffle
 from collections import deque
 
-suit = {
+suitSymbols = {
     'Hearts':'♥',
     'Diamonds':'♦',
     'Clubs':'♣',
     'Spades':'♠'
 }
+
+suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+
 
 class Player:
     # Initializer / Instance Attributes
@@ -22,6 +25,7 @@ class Player:
         self.hand.remove(card)
         return card
 
+    #Pretty print for a hand of cards
     def printHand(self):
         print("Your hand:")
         for j in range(7):
@@ -49,7 +53,7 @@ class Player:
                     if i % 9 == 0 or i % 9 == 8:
                         print("|", end="")
                     elif i % 9 == 4:
-                        print("%s" % (suit[self.hand[int(i/9)].suit])  , end="")
+                        print("%s" % (suitSymbols[self.hand[int(i/9)].suit])  , end="")
                     else:
                         print(' ', end='')
                 elif j == 5:
@@ -76,6 +80,7 @@ class Card:
         self.suit = suit
         self.value = value
 
+    #Pretty print for an individual card
     def printCard(self):
         for j in range(7):
             for i in range(9):
@@ -102,7 +107,7 @@ class Card:
                     if i % 9 == 0 or i % 9 == 8:
                         print("|", end="")
                     elif i % 9 == 4:
-                        print("%s" % (suit[self.suit])  , end="")
+                        print("%s" % (suitSymbols[self.suit])  , end="")
                     else:
                         print(' ', end='')
                 elif j == 5:
@@ -123,7 +128,9 @@ class Card:
                         print(' ', end='')
             print()
 
-
+#A deck is essentially just an empty stack that can be used as various piles in
+#different games. To make it a full deck simply add all 52 cards
+#TODO should I add a function which automatically initializes a deck with 52 cards?
 class Deck:
     # Initializer / Instance Attributes
     def __init__(self):
@@ -148,3 +155,55 @@ class Deck:
 
     def empty(self):
         return not bool(self.cards)
+
+ruleTypes = ["typing", "reverse", "skip"]
+
+#Rule object is used to store all the information relating to each rule
+class Rule:
+    def __init__(self, triggerValue, triggerSuit, ruleType):
+        self.triggerValue = triggerValue
+        self.triggerSuit = triggerSuit
+        self.ruleType = ruleType
+        self.action = action
+        if ruleType == "typing":
+            self.timeToType = input("How long to type out phrase or keyword in seconds?")
+            self.phrase = input("What is the phrase to type")
+            self.reverse = False
+            self.skip = False
+        elif ruleType == "reverse":
+            self.reverse = True
+            self.skip = False
+        elif ruleType == "skip":
+            self.skip = True
+            self.reverse = False
+        else:
+            print("Error, invalid rule type")
+
+#Wrapper for a dictionary that maps suits to values to rules
+class RuleBook:
+    def __init__(self):
+        self.rules = {}
+        for i in range(4):
+            cardValues = {
+                'all': None,
+                'A': None,
+                '2': None,
+                '3': None,
+                '4': None,
+                '5': None,
+                '6': None,
+                '7': None,
+                '8': None,
+                '9': None,
+                '10': None,
+                'J': None,
+                'Q': None,
+                'K': None
+            }
+        self.rules[suits[i]] = cardValues
+
+    def assignRule(self, suit, value, rule):
+        self.rules[suit][value] = rule
+
+    def checkForRule(placedCard, prevCard, secondPrevCard)
+        pass

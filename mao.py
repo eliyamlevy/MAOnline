@@ -3,9 +3,9 @@ import time
 
 #work in progress
 ruleDict = {
-  'A': "reverse",
-  '8': "skip",
-  '7': "have a nice day"
+    'A': "reverse",
+    '8': "skip",
+    '7': "have a nice day"
 }
 
 def printWelcomeScreen(topCard):
@@ -25,6 +25,7 @@ if __name__ == "__main__":
     print("Intializing Deck")
     drawPile = cardGameCore.Deck()
     placePile = cardGameCore.Deck()
+    #Add cards to draw pile
     for suit in ["Clubs", "Spades", "Diamonds", "Hearts"]:
         for value in range(1,14):
             if value == 1:
@@ -39,6 +40,7 @@ if __name__ == "__main__":
                 cardVal = str(value)
             drawPile.placeCardOnBottom(cardGameCore.Card(suit, cardVal))
     print("Deck Initialized")
+    #shuffle pile
     drawPile.shuffleDeck()
     print("Deck Shuffled")
 
