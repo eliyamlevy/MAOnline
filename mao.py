@@ -134,7 +134,7 @@ if __name__ == "__main__":
                                     before = time.time()
                                     response = input()
                                     after = time.time()
-                                    if ((after - before) > 3.5) or (response.lower() != "have a nice day"):
+                                    if ((after - before) > 7) or (response.lower() != "have a nice day"):
                                         print("Failure to follow a rule, you get a card")
                                         player.giveCard(drawPile.getTopCard())
                                     else:

@@ -164,7 +164,6 @@ class Rule:
         self.triggerValue = triggerValue
         self.triggerSuit = triggerSuit
         self.ruleType = ruleType
-        self.action = action
         if ruleType == "typing":
             self.timeToType = input("How long to type out phrase or keyword in seconds?")
             self.phrase = input("What is the phrase to type")
@@ -205,5 +204,5 @@ class RuleBook:
     def assignRule(self, suit, value, rule):
         self.rules[suit][value] = rule
 
-    def checkForRule(placedCard, prevCard, secondPrevCard)
+    def checkForRule(self, placedCard, prevCard, secondPrevCard):
         pass
