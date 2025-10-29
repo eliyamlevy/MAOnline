@@ -28,51 +28,74 @@ class Player:
     #Pretty print for a hand of cards
     def printHand(self):
         print("Your hand:")
-        for j in range(7):
-            for i in range(9*len(self.hand)):
-                if j == 0:
-                    if i % 9 == 0 or i % 9 == 8:
-                        print(" ", end="")
-                    else:
-                        print("_", end="")
-                elif j == 6:
-                    if i % 9 == 0 or i % 9 == 8:
-                        print(" ", end="")
-                    else:
-                        print("-", end="")
-                elif j == 1:
-                    if i % 9 == 0 or i % 9 == 8:
-                        print("|", end="")
-                    elif i % 9 == 1:
-                        print("%s" % (self.hand[int(i/9)].value)  , end="")
-                    elif len(self.hand[int(i/9)].value) > 1 and i % 9 == 2:
-                        pass
-                    else:
-                        print(' ', end='')
-                elif j == 3:
-                    if i % 9 == 0 or i % 9 == 8:
-                        print("|", end="")
-                    elif i % 9 == 4:
-                        print("%s" % (suitSymbols[self.hand[int(i/9)].suit])  , end="")
-                    else:
-                        print(' ', end='')
-                elif j == 5:
-                    if i % 9 == 0 or i % 9 == 8:
-                        print("|", end="")
-                    elif i % 9 == 7 and len(self.hand[int(i/9)].value) > 1:
-                        pass
-                    elif i % 9 == 7 and len(self.hand[int(i/9)].value) == 1:
-                        print("%s" % (self.hand[int(i/9)].value)  , end="")
-                    elif len(self.hand[int(i/9)].value) > 1 and i % 9 == 6:
-                        print("%s" % (self.hand[int(i/9)].value)  , end="")
-                    else:
-                        print(' ', end='')
-                else:
-                    if i % 9 == 0 or i % 9 == 8:
-                        print('|', end='')
-                    else:
-                        print(' ', end='')
+        if len(self.hand) == 0:
+            print("(No cards in hand)")
+            return
+        
+        # Display cards in rows of 7
+        cards_per_row = 7
+        for row_start in range(0, len(self.hand), cards_per_row):
+            row_cards = self.hand[row_start:row_start + cards_per_row]
+            
+            # Print card numbers above the cards
+            for card_idx in range(len(row_cards)):
+                card_num = row_start + card_idx + 1  # 1-indexed
+                # Center the number above the card (9 chars wide)
+                num_str = str(card_num)
+                padding_before = (9 - len(num_str)) // 2
+                padding_after = 9 - len(num_str) - padding_before
+                print(" " * padding_before + num_str + " " * padding_after, end="")
             print()
+            
+            # Print each row of the cards (7 rows tall)
+            for j in range(7):
+                for card_idx in range(len(row_cards)):
+                    card = row_cards[card_idx]
+                    for i in range(9):
+                        if j == 0:
+                            if i % 9 == 0 or i % 9 == 8:
+                                print(" ", end="")
+                            else:
+                                print("_", end="")
+                        elif j == 6:
+                            if i % 9 == 0 or i % 9 == 8:
+                                print(" ", end="")
+                            else:
+                                print("-", end="")
+                        elif j == 1:
+                            if i % 9 == 0 or i % 9 == 8:
+                                print("|", end="")
+                            elif i % 9 == 1:
+                                print("%s" % (card.value), end="")
+                            elif len(card.value) > 1 and i % 9 == 2:
+                                pass
+                            else:
+                                print(' ', end='')
+                        elif j == 3:
+                            if i % 9 == 0 or i % 9 == 8:
+                                print("|", end="")
+                            elif i % 9 == 4:
+                                print("%s" % (suitSymbols[card.suit]), end="")
+                            else:
+                                print(' ', end='')
+                        elif j == 5:
+                            if i % 9 == 0 or i % 9 == 8:
+                                print("|", end="")
+                            elif i % 9 == 7 and len(card.value) > 1:
+                                pass
+                            elif i % 9 == 7 and len(card.value) == 1:
+                                print("%s" % (card.value), end="")
+                            elif len(card.value) > 1 and i % 9 == 6:
+                                print("%s" % (card.value), end="")
+                            else:
+                                print(' ', end='')
+                        else:
+                            if i % 9 == 0 or i % 9 == 8:
+                                print('|', end='')
+                            else:
+                                print(' ', end='')
+                print()
+            print()  # Extra blank line between rows of cards
 
 class Card:
     # Initializer / Instance Attributes

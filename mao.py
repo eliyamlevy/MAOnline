@@ -105,22 +105,59 @@ if __name__ == "__main__":
                     player.printHand()
 
                     #Get player move
-                    move = input("Draw or Place a Card? (d or p)\n")
-                    move = move.lower()
+                    move = input("Draw or Place a Card? (d or p)\n").strip().lower()
+                    
+                    # Handle empty input
+                    if not move:
+                        print("Please enter 'd' to draw or 'p' to place a card")
+                        continue
+
+                    # Handle invalid input
+                    if move not in ['d', 'p', 'q']:
+                        print("Invalid move. Please enter 'd' to draw, 'p' to place a card, or 'q' to quit.")
+                        continue
 
                     #execute move
                     if move == 'd': #Draw
                         validMove = True
                         player.giveCard(drawPile.getTopCard())
                     elif move == 'p': #Place
-                        validMove = True
-                        #get chosen card
-                        choice = input("Which card would you like to place?\n")
-                        if int(choice) > len(player.hand):
-                            validMove = False
-                            print("Card selection not valid try again")
+                        # Check if hand is empty
+                        if len(player.hand) == 0:
+                            print("You have no cards to place! Drawing a card instead.")
+                            validMove = True
+                            player.giveCard(drawPile.getTopCard())
                         else:
-                            cardChosen = player.playCard(int(choice))
+                            #get chosen card
+                            choice = input("Which card would you like to place?\n").strip()
+                            
+                            # Handle empty input
+                            if not choice:
+                                print("Please enter a card number")
+                                validMove = False
+                                continue
+                            
+                            # Try to convert to integer
+                            try:
+                                choice_num = int(choice)
+                            except ValueError:
+                                print("Please enter a valid number")
+                                validMove = False
+                                continue
+                            
+                            # Validate card number range
+                            if choice_num < 1:
+                                print("Card number must be at least 1")
+                                validMove = False
+                                continue
+                            elif choice_num > len(player.hand):
+                                print("Card selection not valid. You only have %d card(s) in your hand." % len(player.hand))
+                                validMove = False
+                                continue
+                            else:
+                                validMove = True
+                                cardChosen = player.playCard(choice_num)
+                            
                             #check chosen card is a valid placement
                             if cardChosen.suit == topCard.suit or cardChosen.value == topCard.value:
                                 #check if there is a rule involved
@@ -157,8 +194,6 @@ if __name__ == "__main__":
                         validMove = True
                         done = True
                         break
-                    else:   #Invalid move loop will iterate again
-                        print("Invalid move please try again")
 
                 #End of player turn
                 input("Press enter and pass to next player")
